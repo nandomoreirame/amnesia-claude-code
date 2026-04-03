@@ -1,5 +1,5 @@
 {
-  "$schema": "amnesia-entity",
+  "$schema": "https://raw.githubusercontent.com/nandomoreirame/amnesia-claude-code/main/schemas/amnesia-entity.schema.json",
   "entity": "my-project",
   "updated_at": "2026-04-01T10:00:00Z",
   "permanent_facts": {
