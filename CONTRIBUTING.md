@@ -27,12 +27,6 @@ Run the full test suite:
 python -m pytest tests/ -v
 ```
 
-Run only unit tests:
-
-```bash
-python -m pytest tests/unit/ -v
-```
-
 Run only integration tests:
 
 ```bash

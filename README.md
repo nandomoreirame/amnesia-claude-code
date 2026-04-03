@@ -77,19 +77,18 @@ Loads the entity named `my-project` from `.claude/amnesia/memory/my-project.json
 
 Returns a structured list of all entities and projects tracked in the current workspace.
 
-### Save an entity
+### Save (entity + session)
 
 ```
-/amnesia my-project save
+/amnesia save
 ```
 
-Claude extracts facts from the current session, presents a diff for confirmation, then writes the updated entity to disk.
+Claude auto-detects the entity from the conversation context, extracts facts, presents a diff for confirmation, then writes both the entity memory and the session log to disk.
 
-### Entity subcommands
+### Entity subcommand
 
 ```
 /amnesia entity my-project     # Load a specific entity
-/amnesia project my-project # Load a specific project
 ```
 
 ## File Structure
@@ -100,8 +99,6 @@ Claude extracts facts from the current session, presents a diff for confirmation
     └── amnesia/
         ├── memory/
         │   └── <entity-name>.json   # Entity records (schema: amnesia-entity)
-        ├── projects/
-        │   └── <project-name>.json  # Project records
         └── sessions/
             └── YYYY-MM-DD.md        # Session logs
 ```
@@ -149,11 +146,13 @@ Claude             ← Handles semantic work: fact extraction, translation, user
 
 **Key principle:** `amnesia.py` never produces plain text. All output is structured JSON so Claude can process it reliably without ambiguity.
 
-### Save flow (two required steps)
+### Save flow (unified — `/amnesia save`)
 
-1. `amnesia.py entity diff <name> <updates_json>` — returns JSON preview (`added`, `updated`, `skipped`)
-2. Present diff to the user — wait for confirmation
-3. `amnesia.py entity save <name> <updates_json>` — write changes
+1. Detect entity name from conversation context (client, project, or root project name as fallback)
+2. `amnesia.py entity diff <name> <updates_json>` — returns JSON preview (`added`, `updated`, `skipped`)
+3. Present diff to the user — wait for confirmation
+4. `amnesia.py entity save <name> <updates_json>` — write entity memory
+5. `amnesia.py project save <name> <entry_json>` — write session log
 
 ### Merge / dedup rules
 
