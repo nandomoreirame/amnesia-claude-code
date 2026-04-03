@@ -9,7 +9,7 @@
     {
       "name": "amnesia",
       "description": "Persistent memory system for Claude Code — deterministic entity and project session memory",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": "./",
       "author": {
         "name": "Fernando Moreira Costa",

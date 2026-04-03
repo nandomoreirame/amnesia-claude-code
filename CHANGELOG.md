@@ -8,6 +8,29 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-04-03
+
+### Added
+
+- Add bidirectional sync with Claude Code native MEMORY.md system (`/amnesia sync`).
+- Add `scripts/native_memory.py` for read-only native memory integration: path resolution, YAML frontmatter parsing, entity filtering, and sync report generation.
+- Add JSON Schema at `schemas/amnesia-entity.schema.json` with `$schema` URL pointing to raw GitHub for editor validation.
+- Add `argument-hint` frontmatter field for CLI autocomplete hints in commands.
+- Add "Why Amnesia?" section to README with competitive comparison table covering 12 other memory plugins.
+- Add plugin installation instructions from GitHub marketplace to README.
+
+### Changed
+
+- Unify save flow: `/amnesia save` now writes both entity memory and session log in a single command.
+- Remove separate `/amnesia project` command — session save is always part of the unified flow.
+- Update `$schema` field from string identifier to full GitHub raw URL for editor validation.
+
+### Fixed
+
+- Fix `--project-root` flag parsing in any argument position using `argparse.SUPPRESS` on subparsers.
+
+---
+
 ## [0.1.0] - 2026-04-03
 
 ### Added
