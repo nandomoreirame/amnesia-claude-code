@@ -32,3 +32,29 @@ def test_local_overrides_global(tmp_path):
     global_s.write_text(json.dumps({"language": "en"}))
     local_s.write_text(json.dumps({"language": "pt-BR"}))
     assert detect_language(settings_path=local_s, fallback_path=global_s) == "pt-BR"
+
+
+def test_get_project_language_reads_local(tmp_path, monkeypatch):
+    (tmp_path / ".claude").mkdir()
+    (tmp_path / ".claude" / "settings.json").write_text(json.dumps({"language": "pt-BR"}))
+    assert get_project_language(project_root=tmp_path) == "pt-BR"
+
+
+def test_get_project_language_falls_back_to_global(tmp_path, monkeypatch):
+    fake_home = tmp_path / "home"
+    fake_home.mkdir()
+    (fake_home / ".claude").mkdir()
+    (fake_home / ".claude" / "settings.json").write_text(json.dumps({"language": "es"}))
+    monkeypatch.setattr(Path, "home", staticmethod(lambda: fake_home))
+    project_root = tmp_path / "project"
+    project_root.mkdir()
+    assert get_project_language(project_root=project_root) == "es"
+
+
+def test_get_project_language_defaults_en(tmp_path, monkeypatch):
+    fake_home = tmp_path / "home"
+    fake_home.mkdir()
+    monkeypatch.setattr(Path, "home", staticmethod(lambda: fake_home))
+    project_root = tmp_path / "project"
+    project_root.mkdir()
+    assert get_project_language(project_root=project_root) == "en"
