@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/nandomoreirame/amnesia-claude-code/main/schemas/amnesia-entity.schema.json",
+  "title": "Amnesia Entity Memory",
+  "description": "Schema for amnesia-entity memory files used by the Amnesia Claude Code plugin",
+  "type": "object",
+  "required": ["$schema", "entity"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://raw.githubusercontent.com/nandomoreirame/amnesia-claude-code/main/schemas/amnesia-entity.schema.json"
+    },
+    "entity": {
+      "type": "string",
+      "description": "Entity name (client, project, or context identifier)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp of last update"
+    },
+    "permanent_facts": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Key-value pairs of permanent metadata"
+        },
+        "items": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of permanent facts about the entity"
+        }
+      },
+      "additionalProperties": false
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date", "author", "decision"],
+        "properties": {
+          "date": { "type": "string", "description": "ISO date (YYYY-MM-DD)" },
+          "author": { "type": "string" },
+          "decision": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "current_status": {
+      "type": "object",
+      "properties": {
+        "phase": { "type": "string" },
+        "tracker_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "blockers": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "last_session": {
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "summary": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "technical_notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

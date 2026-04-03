@@ -1,18 +1,18 @@
 ---
-phase: plan-complete
-feature: amnesia-plugin
+phase: implement-complete
+feature: native-memory-sync
 started_at: 2026-04-03
-spec_path: docs/specs/2026-04-03-amnesia-plugin.md
-plan_path: docs/plans/2026-04-03-amnesia-plugin.md
+spec_path: docs/specs/2026-04-03-native-memory-sync.md
+plan_path: docs/plans/2026-04-03-native-memory-sync.md
 ---
 
 # RPI Session State
 
 ## Feature
 
-Amnesia Claude Code Plugin — CLI Python + commands .md + plugin metadata.
+Native Memory Sync — bidirectional integration between Amnesia plugin and Claude Code native MEMORY.md.
 
 ## Status
 
-Plan complete. 17 tasks ready for implementation.
-Next step: `/rpi:implement`
+Implementation complete. All 10 tasks done, 75 tests passing (34 new + 41 existing).
+Next step: commit and release.

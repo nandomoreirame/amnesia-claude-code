@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 from scripts.paths import get_memory_dir
-from scripts.schema import is_legacy_schema, migrate_v1
+from scripts.schema import is_legacy_schema, migrate_v1, SCHEMA_URL
 from scripts.merge import merge_entity
 
 def load_entity(name: str, project_root: Path) -> dict | None:
@@ -21,7 +21,7 @@ def diff_entity(name: str, updates: dict, project_root: Path) -> dict:
     existing = load_entity(name, project_root)
     is_new = existing is None
     if is_new:
-        existing = {"entity": name, "$schema": "amnesia-entity",
+        existing = {"entity": name, "$schema": SCHEMA_URL,
                     "permanent_facts": {"metadata": {}, "items": []},
                     "decisions": [], "current_status": {}, "last_session": {}, "technical_notes": []}
     preview, diff = merge_entity(existing, updates)
@@ -31,11 +31,11 @@ def save_entity(name: str, updates: dict, project_root: Path) -> dict:
     existing = load_entity(name, project_root)
     is_new = existing is None
     if is_new:
-        existing = {"$schema": "amnesia-entity", "entity": name,
+        existing = {"$schema": SCHEMA_URL, "entity": name,
                     "permanent_facts": {"metadata": {}, "items": []},
                     "decisions": [], "current_status": {}, "last_session": {}, "technical_notes": []}
     merged, diff = merge_entity(existing, updates)
-    merged["$schema"] = "amnesia-entity"
+    merged["$schema"] = SCHEMA_URL
     merged["entity"] = name
     file = get_memory_dir(project_root) / f"{name}.json"
     file.write_text(json.dumps(merged, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

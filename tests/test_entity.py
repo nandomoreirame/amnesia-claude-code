@@ -1,5 +1,6 @@
 import json, pytest
 from scripts.entity import load_entity, list_entities, diff_entity, save_entity
+from scripts.schema import SCHEMA_URL
 
 def test_load_entity_found(tmp_project, sample_entity):
     (tmp_project / ".claude" / "amnesia" / "memory" / "test_client.json").write_text(json.dumps(sample_entity))
@@ -13,7 +14,7 @@ def test_load_entity_not_found(tmp_project):
 def test_load_entity_migrates_v1(tmp_project, sample_entity_v1):
     (tmp_project / ".claude" / "amnesia" / "memory" / "legacy_client.json").write_text(json.dumps(sample_entity_v1))
     result = load_entity("legacy_client", tmp_project)
-    assert result["$schema"] == "amnesia-entity"
+    assert result["$schema"] == SCHEMA_URL
 
 def test_load_entity_corrupted_raises(tmp_project):
     (tmp_project / ".claude" / "amnesia" / "memory" / "broken.json").write_text("{{{invalid")
@@ -60,7 +61,7 @@ def test_save_entity_creates_file(tmp_project):
     result = save_entity("new_client", updates, tmp_project)
     assert result["is_new"] is True
     written = json.loads((tmp_project / ".claude" / "amnesia" / "memory" / "new_client.json").read_text())
-    assert written["$schema"] == "amnesia-entity"
+    assert written["$schema"] == SCHEMA_URL
     assert "first fact" in written["permanent_facts"]["items"]
 
 def test_save_entity_merges_existing(tmp_project, sample_entity):
@@ -82,4 +83,4 @@ def test_save_entity_migrates_v1(tmp_project, sample_entity_v1):
                "last_session": {"date": "2026-04-03", "summary": "Migration"}}
     save_entity("legacy_client", updates, tmp_project)
     written = json.loads((tmp_project / ".claude" / "amnesia" / "memory" / "legacy_client.json").read_text())
-    assert written["$schema"] == "amnesia-entity"
+    assert written["$schema"] == SCHEMA_URL

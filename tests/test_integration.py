@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from scripts.entity import load_entity, diff_entity, save_entity
+from scripts.schema import SCHEMA_URL
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -18,7 +19,7 @@ def test_roundtrip_no_data_loss(tmp_project):
     save_entity("my-project", updates, tmp_project)
     reloaded = load_entity("my-project", tmp_project)
     assert len(reloaded["permanent_facts"]["items"]) == original_count + 1
-    assert reloaded["$schema"] == "amnesia-entity"
+    assert reloaded["$schema"] == SCHEMA_URL
 
 def test_dedup_on_repeated_save(tmp_project):
     fixture = json.loads((FIXTURES / "my-project.json").read_text())

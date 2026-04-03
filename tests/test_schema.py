@@ -1,4 +1,4 @@
-from scripts.schema import EntityMemory, is_legacy_schema, migrate_v1
+from scripts.schema import EntityMemory, is_legacy_schema, migrate_v1, SCHEMA_URL
 
 def test_entity_memory_valid(sample_entity):
     m = EntityMemory.model_validate(sample_entity)
@@ -7,7 +7,7 @@ def test_entity_memory_valid(sample_entity):
 
 def test_entity_memory_defaults():
     m = EntityMemory(entity="new_client")
-    assert m.schema_ == "amnesia-entity"
+    assert m.schema_ == SCHEMA_URL
     assert m.permanent_facts.items == []
 
 def test_is_legacy_schema(sample_entity_v1):
@@ -22,4 +22,4 @@ def test_migrate_v1(sample_entity_v1):
     assert m.entity == "legacy_client"
     assert m.permanent_facts.metadata["s3_name"] == "legacy-client"
     assert "OL-99" in m.current_status.tracker_ids
-    assert m.schema_ == "amnesia-entity"
+    assert m.schema_ == SCHEMA_URL

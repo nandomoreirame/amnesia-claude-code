@@ -3,6 +3,8 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from pydantic import BaseModel, Field
 
+SCHEMA_URL = "https://raw.githubusercontent.com/nandomoreirame/amnesia-claude-code/main/schemas/amnesia-entity.schema.json"
+
 class PermanentFacts(BaseModel):
     metadata: dict[str, str] = Field(default_factory=dict)
     items: list[str] = Field(default_factory=list)
@@ -22,7 +24,7 @@ class LastSession(BaseModel):
     summary: str = ""
 
 class EntityMemory(BaseModel):
-    schema_: str = Field(alias="$schema", default="amnesia-entity")
+    schema_: str = Field(alias="$schema", default=SCHEMA_URL)
     entity: str
     updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
     permanent_facts: PermanentFacts = Field(default_factory=PermanentFacts)
@@ -40,7 +42,7 @@ def migrate_v1(data: dict) -> dict:
     old_status = data.get("current_status", {})
     metadata = {k: str(v) for k, v in pf.items() if k != "items" and isinstance(v, (str, int, float))}
     return {
-        "$schema": "amnesia-entity",
+        "$schema": SCHEMA_URL,
         "entity": data.get("client", data.get("entity", "")),
         "updated_at": data.get("updated_at", datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")),
         "permanent_facts": {"metadata": metadata, "items": pf.get("items", [])},
