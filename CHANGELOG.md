@@ -8,6 +8,27 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-04-03
+
+### Security
+
+- Add entity name validation to prevent path traversal attacks via malicious names containing `../` or special characters.
+
+### Changed
+
+- Write entity JSON files with `indent=2` for human-readable diffs in version control.
+- Extract `_new_entity()` factory to eliminate duplicated default entity scaffolding.
+- Use idiomatic `set` instead of `dict` for deduplication tracking in `merge_list`.
+- Handle `FileNotFoundError` and `OSError` in `_git_log` for environments without git installed.
+
+### Fixed
+
+- Fix test fixtures using non-standard `$schema` value instead of canonical `SCHEMA_URL`.
+- Fix `pyproject.toml` version out of sync with CHANGELOG (`0.1.0` → `0.2.0`).
+- Add `.coverage` to `.gitignore` to exclude pytest coverage artifacts.
+
+---
+
 ## [0.2.0] - 2026-04-03
 
 ### Added
