@@ -4,7 +4,7 @@ build-backend = "setuptools.backends.legacy:build"
 
 [project]
 name = "amnesia"
-version = "0.2.0"
+version = "0.2.1"
 requires-python = ">=3.10"
 dependencies = ["pydantic>=2.0"]
 
