@@ -1,6 +1,7 @@
 ---
 name: amnesia
 description: "Amnesia memory system — /amnesia <name>, /amnesia list, /amnesia save"
+argument-hint: "[<name> | list | save | entity | sync]"
 ---
 
 ## Amnesia — Memory System
