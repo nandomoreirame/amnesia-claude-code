@@ -6,11 +6,11 @@ def _norm(text: str) -> str:
     return text.strip().lower()
 
 def merge_list(existing: list[str], new_items: list[str]) -> tuple[list[str], list[str], list[str]]:
-    seen = {_norm(i): True for i in existing}
+    seen = {_norm(i) for i in existing}
     merged, added, skipped = list(existing), [], []
     for item in new_items:
         if _norm(item) not in seen:
-            merged.append(item); added.append(item); seen[_norm(item)] = True
+            merged.append(item); added.append(item); seen.add(_norm(item))
         else:
             skipped.append(item)
     return merged, added, skipped

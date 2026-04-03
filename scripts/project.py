@@ -28,7 +28,7 @@ def _git_log(project_dir: Path, days: int = 7) -> list[str]:
         r = subprocess.run(["git", "-C", str(project_dir), "log", "--oneline", f"--since={days} days ago"],
                            capture_output=True, text=True, check=True)
         return [l for l in r.stdout.strip().splitlines() if l]
-    except subprocess.CalledProcessError:
+    except (subprocess.CalledProcessError, FileNotFoundError, OSError):
         return []
 
 def _extract_sections(content: str, name: str) -> list[dict]:
