@@ -1,5 +1,6 @@
 import json, pytest
 from pathlib import Path
+from scripts.schema import SCHEMA_URL
 
 @pytest.fixture
 def tmp_project(tmp_path):
@@ -11,7 +12,7 @@ def tmp_project(tmp_path):
 @pytest.fixture
 def sample_entity():
     return {
-        "$schema": "amnesia-entity", "entity": "test_client",
+        "$schema": SCHEMA_URL, "entity": "test_client",
         "updated_at": "2026-04-01T10:00:00Z",
         "permanent_facts": {"metadata": {"data_source": "Sienge API"}, "items": ["existing fact one", "existing fact two"]},
         "decisions": [{"date": "2026-03-01", "author": "user", "decision": "Use V2 pipeline"}],
