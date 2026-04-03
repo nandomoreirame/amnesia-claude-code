@@ -93,6 +93,10 @@ Bidirectional integration with Claude Code's native `MEMORY.md` system (`~/.clau
 - **Mapping:** `current_status`→project, `decisions`→feedback, `metadata`→reference. `items` and `technical_notes` are NOT synced.
 - **Index limit:** warns when MEMORY.md exceeds 180 lines (native truncates at 200)
 
+## JSON Schema
+
+Entity files use `$schema` pointing to `https://raw.githubusercontent.com/nandomoreirame/amnesia-claude-code/main/schemas/amnesia-entity.schema.json`. The constant `SCHEMA_URL` in `scripts/schema.py` is the single source of truth — used by `entity.py`, `schema.py`, and `migrate_v1()`.
+
 ## Specs
 
 - Plugin spec: `docs/specs/2026-04-03-amnesia-plugin.md` (REQ-001–REQ-018)

@@ -85,6 +85,14 @@ Returns a structured list of all entities and projects tracked in the current wo
 
 Claude auto-detects the entity from the conversation context, extracts facts, presents a diff for confirmation, then writes both the entity memory and the session log to disk.
 
+### Sync with native memory
+
+```
+/amnesia sync
+```
+
+Synchronizes all Amnesia entities to Claude Code's native `MEMORY.md` system. Generates a report with entity-to-native mapping, orphan detection, and index limit warnings. After sync, Claude writes the native memory files using its built-in memory mechanism.
+
 ### Entity subcommand
 
 ```
@@ -112,7 +120,7 @@ All CLI operations return structured JSON. Example:
   "data": {
     "found": true,
     "entity": "my-project",
-    "$schema": "amnesia-entity",
+    "$schema": "https://raw.githubusercontent.com/nandomoreirame/amnesia-claude-code/main/schemas/amnesia-entity.schema.json",
     "permanent_facts": {
       "metadata": { "data_source": "Sienge API" },
       "items": ["Client uses Sienge ERP for financial data"]
@@ -139,9 +147,10 @@ On error:
 ## Architecture Overview
 
 ```
-amnesia.py         ← Python CLI: deterministic I/O, merge, dedup, Pydantic v2 validation
-commands/*.md      ← Thin Claude Code command wrappers (≤40 lines each)
-Claude             ← Handles semantic work: fact extraction, translation, user presentation
+amnesia.py            ← Python CLI: deterministic I/O, merge, dedup, Pydantic v2 validation
+native_memory.py      ← Read-only native MEMORY.md integration (path resolution, frontmatter parsing)
+commands/*.md         ← Thin Claude Code command wrappers (≤40 lines each)
+Claude                ← Handles semantic work: fact extraction, translation, user presentation
 ```
 
 **Key principle:** `amnesia.py` never produces plain text. All output is structured JSON so Claude can process it reliably without ambiguity.
@@ -163,6 +172,27 @@ Claude             ← Handles semantic work: fact extraction, translation, user
 | `decisions` | Deduplicated by `(date, author, decision[:50])` |
 | `current_status` | Replaced entirely on each save |
 | `last_session` | Replaced entirely on each save |
+
+## Native Memory Sync
+
+Amnesia integrates bidirectionally with Claude Code's native `MEMORY.md` system (`~/.claude/projects/<slug>/memory/`):
+
+- **Read:** `amnesia.py` reads native memory files to provide context on entity load and before save
+- **Write:** After entity save, Claude writes to native memory using its built-in mechanism (amnesia.py never writes to native memory directly)
+- **Mapping:** `current_status` → `project` type, `decisions` → `feedback` type, `permanent_facts.metadata` → `reference` type
+- **Excluded:** `permanent_facts.items` and `technical_notes` are NOT synced to native memory
+- **Index limit:** Warns when `MEMORY.md` exceeds 180 lines (Claude truncates at 200)
+- **Orphan detection:** Identifies native memory files that no longer match any Amnesia entity
+
+## JSON Schema
+
+Entity files use a JSON Schema hosted on GitHub for editor validation:
+
+```
+https://raw.githubusercontent.com/nandomoreirame/amnesia-claude-code/main/schemas/amnesia-entity.schema.json
+```
+
+The `$schema` field in each entity JSON points to this URL, enabling autocompletion and validation in VS Code and other editors.
 
 ## Schema Migration
 

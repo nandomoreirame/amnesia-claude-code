@@ -89,8 +89,12 @@ def cmd_entity_mycommand(args):
 ## Adding New Modules to scripts/
 
 - New modules go in `scripts/` and must be importable as `scripts.<module>`.
-- Each module should have a clear single responsibility (e.g., `merge.py` for dedup logic, `paths.py` for path resolution).
+- Each module should have a clear single responsibility (e.g., `merge.py` for dedup logic, `paths.py` for path resolution, `native_memory.py` for native MEMORY.md integration).
 - Write unit tests in `tests/test_<module>.py`.
+
+## JSON Schema
+
+The `$schema` URL for entity files is defined as `SCHEMA_URL` in `scripts/schema.py`. If you update the schema, also update `schemas/amnesia-entity.schema.json` so editor validation stays in sync.
 
 ## Commands (.md files)
 
