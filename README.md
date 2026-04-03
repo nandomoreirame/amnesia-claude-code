@@ -29,10 +29,10 @@ Or install manually by cloning this repository and pointing Claude Code to the `
 ### Load an entity
 
 ```
-/amnesia vivamus
+/amnesia my-project
 ```
 
-Loads the entity named `vivamus` from `.claude/amnesia/memory/vivamus.json` in the current project root.
+Loads the entity named `my-project` from `.claude/amnesia/memory/my-project.json` in the current project root.
 
 ### List all entities
 
@@ -45,7 +45,7 @@ Returns a structured list of all entities and projects tracked in the current wo
 ### Save an entity
 
 ```
-/amnesia vivamus save
+/amnesia my-project save
 ```
 
 Claude extracts facts from the current session, presents a diff for confirmation, then writes the updated entity to disk.
@@ -53,7 +53,7 @@ Claude extracts facts from the current session, presents a diff for confirmation
 ### Entity subcommands
 
 ```
-/amnesia entity vivamus     # Load a specific entity
+/amnesia entity my-project     # Load a specific entity
 /amnesia project my-project # Load a specific project
 ```
 
@@ -79,7 +79,7 @@ All CLI operations return structured JSON. Example:
 {
   "data": {
     "found": true,
-    "entity": "vivamus",
+    "entity": "my-project",
     "$schema": "amnesia-entity",
     "permanent_facts": {
       "metadata": { "data_source": "Sienge API" },

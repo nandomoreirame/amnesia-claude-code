@@ -1,16 +1,16 @@
 {
   "$schema": "amnesia-entity",
-  "entity": "vivamus",
+  "entity": "my-project",
   "updated_at": "2026-04-01T10:00:00Z",
   "permanent_facts": {
     "metadata": {
       "data_source": "Sienge API",
-      "s3_name": "vivamus-data"
+      "s3_name": "my-project-data"
     },
     "items": [
       "Client uses Sienge ERP for financial data",
       "Monthly data processing cycle: extract → transform → upload",
-      "S3 bucket: vivamus-data/raw/"
+      "S3 bucket: my-project-data/raw/"
     ]
   },
   "decisions": [
