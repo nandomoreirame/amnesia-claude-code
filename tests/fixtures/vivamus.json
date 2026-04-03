@@ -1,0 +1,32 @@
+{
+  "$schema": "amnesia-entity",
+  "entity": "vivamus",
+  "updated_at": "2026-04-01T10:00:00Z",
+  "permanent_facts": {
+    "metadata": {
+      "data_source": "Sienge API",
+      "s3_name": "vivamus-data"
+    },
+    "items": [
+      "Client uses Sienge ERP for financial data",
+      "Monthly data processing cycle: extract → transform → upload",
+      "S3 bucket: vivamus-data/raw/"
+    ]
+  },
+  "decisions": [
+    {"date": "2026-02-15", "author": "nando", "decision": "Use V2 pipeline for all extractions"},
+    {"date": "2026-03-20", "author": "livia", "decision": "Switch to incremental uploads for large datasets"}
+  ],
+  "current_status": {
+    "phase": "processing",
+    "tracker_ids": ["OL-150", "OL-151"],
+    "blockers": []
+  },
+  "last_session": {
+    "date": "2026-04-01",
+    "summary": "Processed January and February data successfully"
+  },
+  "technical_notes": [
+    "Sienge API rate limit: 100 req/min — use batch endpoint for bulk"
+  ]
+}
