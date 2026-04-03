@@ -10,19 +10,54 @@ A native Claude Code plugin that transforms the Amnesia memory system into a det
 
 ## Installation
 
-1. Install the Python dependency:
+### From GitHub (recommended)
+
+1. Add the marketplace:
+
+```
+/plugin marketplace add nandomoreirame/amnesia-claude-code
+```
+
+1. Install the plugin (choose user or project scope when prompted):
+
+```
+/plugin install amnesia@amnesia-plugin
+```
+
+1. Reload plugins:
+
+```
+/reload-plugins
+```
+
+### Manual installation
+
+1. Clone this repository:
+
+```bash
+git clone https://github.com/nandomoreirame/amnesia-claude-code.git
+```
+
+1. Add as a local marketplace:
+
+```
+/plugin marketplace add /path/to/amnesia-claude-code
+```
+
+1. Install and reload:
+
+```
+/plugin install amnesia@amnesia-plugin
+/reload-plugins
+```
+
+### Python dependency
+
+The plugin requires Python 3.10+ and Pydantic v2:
 
 ```bash
 pip install pydantic
 ```
-
-1. Install the plugin via Claude Code:
-
-```
-/plugin install
-```
-
-Or install manually by cloning this repository and pointing Claude Code to the `.claude-plugin/plugin.json` manifest.
 
 ## Usage
 
