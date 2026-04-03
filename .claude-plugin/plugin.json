@@ -1,0 +1,10 @@
+{
+  "name": "amnesia",
+  "version": "0.1.0",
+  "description": "Persistent memory system for Claude Code — deterministic entity and project session memory",
+  "author": "nandomoreira",
+  "license": "MIT",
+  "main": "scripts/amnesia.py",
+  "commands": ["commands/amnesia.md", "commands/amnesia/entity.md", "commands/amnesia/project.md"],
+  "requires": {"python": ">=3.10", "packages": ["pydantic>=2.0"]}
+}

@@ -1,0 +1,14 @@
+{
+  "name": "amnesia-plugin",
+  "owner": "nandomoreira",
+  "plugins": [
+    {
+      "name": "amnesia",
+      "description": "Persistent memory system for Claude Code",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nandomoreira/amnesia-claude-code"
+      }
+    }
+  ]
+}
